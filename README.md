@@ -6,7 +6,6 @@ Implemented Multihead attention transformer from the scratch rather than just us
 
 input.txt contain the dataset of Shakespeare poem dataset.
 
-Run the gpt.py for pre-training.
-
 Bigram.ipynb file is to understand the basic bi-gram level LM model.
 
+Run the gpt.py for pre-training.
