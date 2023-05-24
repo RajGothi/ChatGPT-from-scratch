@@ -66,6 +66,7 @@ class Head(nn.Module):
 
     def __init__(self, head_size):
         super().__init__()
+        #bias is false, AS we will not add the + b term in the linear layer...
         self.key = nn.Linear(n_embd, head_size, bias=False)
         self.query = nn.Linear(n_embd, head_size, bias=False)
         self.value = nn.Linear(n_embd, head_size, bias=False)
@@ -108,6 +109,7 @@ class FeedFoward(nn.Module):
 
     def __init__(self, n_embd):
         super().__init__()
+        #4*n_embd as it is mentioned in the "Attention is all you need paper."
         self.net = nn.Sequential(
             nn.Linear(n_embd, 4 * n_embd),
             nn.ReLU(),
@@ -131,8 +133,11 @@ class Block(nn.Module):
         self.ln2 = nn.LayerNorm(n_embd)
 
     def forward(self, x):
-        x = x + self.sa(self.ln1(x))
-        x = x + self.ffwd(self.ln2(x))
+
+        #Multihead attention + Layer Normalization + Feed Forwad + Layer Normalization
+
+        x = x + self.sa(self.ln1(x)) #Residual connection
+        x = x + self.ffwd(self.ln2(x)) #Residual connection
         return x
 
 class GPTLanguageModel(nn.Module):
